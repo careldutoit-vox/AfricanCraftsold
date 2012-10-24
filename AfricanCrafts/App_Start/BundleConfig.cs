@@ -8,6 +8,21 @@ namespace AfricanCrafts
         // For more information on Bundling, visit http://go.microsoft.com/fwlink/?LinkId=254725
         public static void RegisterBundles(BundleCollection bundles)
         {
+            bundles.Add(new ScriptBundle("~/js").Include(
+                "~/Scripts/jquery-1.*",
+                "~/Scripts/bootstrap.js",
+                "~/Scripts/jquery.validate.js",
+                "~/scripts/jquery.validate.unobtrusive.js",
+                "~/Scripts/jquery.validate.unobtrusive-custom-for-bootstrap.js"
+                ));
+
+            bundles.Add(new StyleBundle("~/content/bootstrap").Include(
+                "~/Content/bootstrap.css"
+                ));
+            bundles.Add(new StyleBundle("~/content/css-responsive").Include(
+                "~/Content/bootstrap-responsive.css"
+                ));
+
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
                         "~/Scripts/jquery-{version}.js"));
 
