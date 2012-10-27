@@ -7,8 +7,8 @@
     <ProjectGuid>{32AC0550-682F-4F7C-97E4-4F9A6C494683}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>MySqlDbConnection</RootNamespace>
-    <AssemblyName>MySqlDbConnection</AssemblyName>
+    <RootNamespace>DbLayer</RootNamespace>
+    <AssemblyName>DbLayer</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
@@ -58,6 +58,7 @@
     <Compile Include="Context\AfricanCraftsContextSQL.cs" />
     <Compile Include="CreateMySqlDatabaseIfNotExists.cs" />
     <Compile Include="Models\AccountModel.cs" />
+    <Compile Include="Models\Product.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

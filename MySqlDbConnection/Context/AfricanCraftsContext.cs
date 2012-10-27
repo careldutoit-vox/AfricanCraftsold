@@ -12,5 +12,6 @@ namespace DbLayer.Context {
             : base("AfricanCraftsContext")
         {
         }
+		public DbSet<Product> Product { get; set; }	
 	}
 }
