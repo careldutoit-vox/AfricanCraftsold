@@ -1,10 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using DbLayer.Context;
 using DbLayer.Models;
+using Newtonsoft.Json;
 
 namespace AfricanCrafts.Controllers {
 	public class ProductController : Controller {
@@ -12,6 +16,7 @@ namespace AfricanCrafts.Controllers {
 		// GET: /Product/
 
 		public ActionResult Index() {
+			ViewBag.SyncOrAsync = "Synchronous";
 			List<Product> productList = new List<Product>();
 			using (var db = new AfricanCraftsContext()) {
 				// Display all Blogs from the database
@@ -19,12 +24,29 @@ namespace AfricanCrafts.Controllers {
 											 orderby b.Name
 											 select b;
 				productList.AddRange(products);
+				
 
 			}
 			return View(productList);
 		}
+		[AsyncTimeout(150)]
+		[HandleError(ExceptionType = typeof(TimeoutException),
+																				View = "TimeoutError")]
+		public async Task<ActionResult> ProductAsync() {
+			ViewBag.SyncOrAsync = "Asynchronous";
+			return View("Product", await GetProductAsync());
+			
+		}
 
-		//
+		public async Task<List<Product>> GetProductAsync() {
+			
+			using (HttpClient client = new HttpClient()) {
+				HttpResponseMessage response = await client.GetAsync("http://localhost:8333/product");
+				return await response.Content.ReadAsAsync<List<Product>>();
+			
+			}
+		}
+
 		// GET: /Product/Details/5
 
 		public ActionResult Details(int id) {
