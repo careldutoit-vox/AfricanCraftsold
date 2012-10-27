@@ -145,7 +145,7 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\MySqlDbConnection\DbLayer.csproj">
+    <ProjectReference Include="..\DbLayer\DbLayer.csproj">
       <Project>{32ac0550-682f-4f7c-97e4-4f9a6c494683}</Project>
       <Name>DbLayer</Name>
     </ProjectReference>
