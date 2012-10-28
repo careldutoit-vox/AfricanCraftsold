@@ -1,10 +1,11 @@
 ﻿using System;
+using System.Configuration;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Threading;
 using System.Web.Mvc;
+using DbLayer.Context;
 using WebMatrix.WebData;
-using AfricanCrafts.Models;
 
 namespace AfricanCrafts.Filters
 {
@@ -18,18 +19,18 @@ namespace AfricanCrafts.Filters
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
             // Ensure ASP.NET Simple Membership is initialized only once per app start
-            LazyInitializer.EnsureInitialized(ref _initializer, ref _isInitialized, ref _initializerLock);
+           LazyInitializer.EnsureInitialized(ref _initializer, ref _isInitialized, ref _initializerLock);
         }
 
         private class SimpleMembershipInitializer
         {
             public SimpleMembershipInitializer()
             {
-                Database.SetInitializer<UsersContext>(null);
+							Database.SetInitializer<AfricanCraftsContextSQL>(null);
 
                 try
                 {
-                    using (var context = new UsersContext())
+									using (var context = new AfricanCraftsContextSQL())
                     {
                         if (!context.Database.Exists())
                         {
@@ -37,8 +38,10 @@ namespace AfricanCrafts.Filters
                             ((IObjectContextAdapter)context).ObjectContext.CreateDatabase();
                         }
                     }
-
-                    WebSecurity.InitializeDatabaseConnection("DefaultConnection", "UserProfile", "UserId", "UserName", autoCreateTables: true);
+									//SQL
+									WebSecurity.InitializeDatabaseConnection("AfricanCraftsContextSQL", "UserProfile", "UserId", "UserName", autoCreateTables: true);
+									//Mysql 
+									//WebSecurity.InitializeDatabaseConnection("AfricanCraftsContext", "userprofile", "UserId", "UserName", true);
                 }
                 catch (Exception ex)
                 {
