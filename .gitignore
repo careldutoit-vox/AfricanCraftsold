@@ -166,3 +166,5 @@ pip-log.txt
 ## Custom
 ############
 AfricanCrafts.v11.suo
+/AfricanCrafts/App_Data/aspnet-AfricanCrafts-20121024202212.mdf
+/AfricanCrafts/App_Data/aspnet-AfricanCrafts-20121024202212_log.ldf
