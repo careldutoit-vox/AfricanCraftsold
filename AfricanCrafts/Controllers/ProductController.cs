@@ -42,8 +42,8 @@ namespace AfricanCrafts.Controllers {
 			
 			using (HttpClient client = new HttpClient()) {
 				HttpResponseMessage response = await client.GetAsync("http://localhost:8333/product");
-				return await response.Content.ReadAsAsync<List<Product>>();
-			
+				var result = await response.Content.ReadAsAsync<List<Product>>();
+				return result;
 			}
 		}
 
