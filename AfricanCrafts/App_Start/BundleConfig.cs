@@ -17,9 +17,7 @@ namespace AfricanCrafts
                 ));
 
             bundles.Add(new StyleBundle("~/content/bootstrap").Include(
-                "~/Content/bootstrap.css"
-                ));
-            bundles.Add(new StyleBundle("~/content/css-responsive").Include(
+                "~/Content/bootstrap.css",
                 "~/Content/bootstrap-responsive.css"
                 ));
 
