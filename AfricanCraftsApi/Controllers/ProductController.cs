@@ -27,7 +27,7 @@ namespace AfricanCraftsApi.Controllers
 					//								orderby s.Name
 					//								select s;
 					//}
-					//return db.Product.All;
+					//return AllProducts();
 					//db.Product.AsEnumerable();
 						//using (var db2 = new AfricanCraftsContext()) {
 							// Display all Blogs from the database

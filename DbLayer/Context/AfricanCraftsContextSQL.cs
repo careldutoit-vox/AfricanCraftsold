@@ -12,6 +12,6 @@ namespace DbLayer.Context {
             : base("AfricanCraftsContextSQL")
         {
         }
-		public DbSet<UserProfile> UserProfiles { get; set; }	
+		public DbSet<UserProfile> UserProfiles { get; set; }
 	}
 }

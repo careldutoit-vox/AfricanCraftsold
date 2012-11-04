@@ -15,8 +15,16 @@ password
 
 
 
-MySQL Problem
+MySQL Problem http://blogs.msdn.com/b/webdev/archive/2012/08/15/oauth-openid-support-for-webforms-mvc-and-webpages.aspx
 http://forums.asp.net/t/1766451.aspx/1
+
+
+Enable login to different systems
+twitter: https://dev.twitter.com/discussions/631
+
+face book: http://stackoverflow.com/questions/2289712/where-do-i-find-api-key-and-api-secret-for-facebook
+
+Microsoft: 
 
 
 
