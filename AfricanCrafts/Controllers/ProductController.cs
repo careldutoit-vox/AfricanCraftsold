@@ -30,8 +30,7 @@ namespace AfricanCrafts.Controllers {
 			return View(productList);
 		}
 		[AsyncTimeout(150)]
-		[HandleError(ExceptionType = typeof(TimeoutException),
-																				View = "TimeoutError")]
+		[HandleError(ExceptionType = typeof(TimeoutException), View = "TimeoutError")]
 		public async Task<ActionResult> ProductAsync() {
 			ViewBag.SyncOrAsync = "Asynchronous";
 			return View("Product", await GetProductAsync());
