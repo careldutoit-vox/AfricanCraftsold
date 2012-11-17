@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.DirectoryServices.AccountManagement;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using DataRepository.Common;
 
-namespace DataRepository.Common
+namespace DataRepository.Repositories
 {
-    public class GenericRepository<T> : IRepository<T> where T : IEntity
+    public class InMemoryRepository<T> : IRepository<T>where T : IEntity, new()
     {
         readonly List<T> _context = new List<T>();
         
@@ -18,7 +16,7 @@ namespace DataRepository.Common
                 entity.Id = _context.Count() + 1;
                 entity.Uid = entity.Uid == new Guid() ? Guid.NewGuid() : entity.Uid;
                 entity.DateCreated = DateTime.Now;
-                // ToDo: Gonna need to see how to integrate this into OAuth
+                // ToDo: Gonna need to see how to integrate this with OAuth
                 entity.CreatedBy = "Devlin"; //UserPrincipal.Current.DisplayName;
                 _context.Add(entity);
             }
@@ -40,12 +38,14 @@ namespace DataRepository.Common
 
         public List<T> List()
         {
-            return _context.ToList();
+            return _context;
         }
 
         public T GetGyId(int entityId)
         {
-            return _context[FindIndexById(entityId)];
+            var returnEntity = _context.FirstOrDefault(entity => entity.Id == entityId);
+
+            return !(returnEntity == null) ? returnEntity : new T();
         }
 
         public T GetGyUid(Guid entityUid)

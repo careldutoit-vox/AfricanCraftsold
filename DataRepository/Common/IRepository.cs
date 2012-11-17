@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace DataRepository.Common {
-    public interface IRepository<T> where T : IEntity
+    public interface IRepository<T>where T : IEntity, new()
     {
         T Save(T entity);
         List<T> List();

@@ -42,20 +42,16 @@
   <ItemGroup>
     <Compile Include="Class1.cs" />
     <Compile Include="Common\BaseEntity.cs" />
-    <Compile Include="Common\GenericFactory.cs" />
-    <Compile Include="Common\GenericRepository.cs" />
+    <Compile Include="Repositories\InMemoryRepository.cs" />
     <Compile Include="Common\IEntity.cs" />
-    <Compile Include="Common\IGenericFactory.cs" />
     <Compile Include="Common\IModificationHistory.cs" />
-    <Compile Include="Common\GenericFluentFactory.cs" />
     <Compile Include="Common\IRepository.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Entities\Product.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Repositories\" />
+    <Folder Include="Entities\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -7,7 +7,7 @@ using DataRepository.Common;
 
 namespace DataRepository.Repositories
 {
-    public class EntityRepository : IRepository<IEnitity>
+    public class EntityRepository : IRepository<IEnitity> where T : IEntity
     {
     }
 }

@@ -5,9 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using DataRepository.Common;
 
-namespace DataRepository.Entities
+namespace DataRepositoryTests.Models
 {
-    public class Product : BaseEntity
+    public class Item : BaseEntity
     {
         public string Name { get; set; }
         public string Description { get; set; }
