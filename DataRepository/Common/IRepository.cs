@@ -5,14 +5,14 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace DataRepository.Common {
-    public interface IRepository<T>where T : IEntity, new()
+    public interface IRepository<T> where T : class, new()
     {
-        T Save(T entity);
-        List<T> List();
-        T GetGyId(int entityId);
-        T GetGyUid(Guid entityUid);
-        void Delete(T entity);
-        void Delete(int entityId);
-        void Delete(Guid entityUid);
+        IQueryable<T> GetAll();
+        T GetById(int id);
+        T GetByUid(Guid uid);
+        T SaveOrUpdate(T entity);
+        void DeleteOnSubmit(T entity);
+        void Delete(int id);
+        void Delete(Guid uid);
     }
 }

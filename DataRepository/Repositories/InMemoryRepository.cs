@@ -5,11 +5,11 @@ using DataRepository.Common;
 
 namespace DataRepository.Repositories
 {
-    public class InMemoryRepository<T> : IRepository<T>where T : IEntity, new()
+    public class InMemoryRepository<T> : IRepository<T> where T : class, IEntity, new()
     {
         readonly List<T> _context = new List<T>();
-        
-        public T Save(T entity)
+
+        public virtual T SaveOrUpdate(T entity)
         {
             if (entity.Id == 0)
             {
@@ -36,36 +36,36 @@ namespace DataRepository.Repositories
             return entity;
         }
 
-        public List<T> List()
+        public virtual IQueryable<T> GetAll()
         {
-            return _context;
+            return _context.AsQueryable();
         }
 
-        public T GetGyId(int entityId)
+        public T GetById(int entityId)
         {
             var returnEntity = _context.FirstOrDefault(entity => entity.Id == entityId);
 
-            return !(returnEntity == null) ? returnEntity : new T();
+            return returnEntity ?? new T();
         }
 
-        public T GetGyUid(Guid entityUid)
+        public T GetByUid(Guid entityUid)
         {
             return _context[FindIndexByUid(entityUid)];
         }
 
-        public void Delete(T entity)
+        public void DeleteOnSubmit(T entity)
         {
             _context.RemoveAt(FindIndexById(entity.Id));
         }
 
-        public void Delete(int entityId)
+        public void Delete(int id)
         {
-            _context.RemoveAt(FindIndexById(entityId));
+            _context.RemoveAt(FindIndexById(id));
         }
 
-        public void Delete(Guid entityUid)
+        public void Delete(Guid uid)
         {
-            _context.RemoveAt(FindIndexByUid(entityUid));
+            _context.RemoveAt(FindIndexByUid(uid));
         }
 
         private int FindIndexById(int entityId)

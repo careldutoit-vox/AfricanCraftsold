@@ -12,63 +12,63 @@ namespace DataRepositoryTests
         readonly IRepository<Item> _repository = new InMemoryRepository<Item>();
 
         [TestMethod]
-        public void InMemoryRepository_Save_Inserts_New_Item()
+        public void InMemoryRepository_SaveOrUpdate_Inserts_New_Item()
         {
             var expectedItem = AddExpectedItem();
-            expectedItem = _repository.Save(expectedItem);
+            expectedItem = _repository.SaveOrUpdate(expectedItem);
 
-            var result = _repository.List().FirstOrDefault(item => item == expectedItem);
+            var result = _repository.GetAll().FirstOrDefault(item => item == expectedItem);
 
             AssertResult(expectedItem, result);
         }
 
         [TestMethod]
-        public void InMemoryRepository_Save_Updates_Existing_Item()
+        public void InMemoryRepository_SaveOrUpdate_Updates_Existing_Item()
         {
             var expectedItem = AddExpectedItem();
-            expectedItem = _repository.Save(expectedItem);
+            expectedItem = _repository.SaveOrUpdate(expectedItem);
             expectedItem.Name = "Updated";
-            expectedItem = _repository.Save(expectedItem);
+            expectedItem = _repository.SaveOrUpdate(expectedItem);
 
-            var result = _repository.List().FirstOrDefault(item => item == expectedItem);
+            var result = _repository.GetAll().FirstOrDefault(item => item == expectedItem);
 
             AssertResult(expectedItem, result);
             Assert.AreEqual("Updated", result.Name);
         }
 
         [TestMethod]
-        public void InMemoryRepository_Save_Returns_ListCount_One_Greater_After_Saving_One_Item()
+        public void InMemoryRepository_SaveOrUpdate_Returns_ListCount_One_Greater_After_Saving_One_Item()
         {
-            var expectedCount = _repository.List().Count + 1;
+            var expectedCount = _repository.GetAll().Count() + 1;
             AddItems(1);
-            Assert.AreEqual(expectedCount, _repository.List().Count);
+            Assert.AreEqual(expectedCount, _repository.GetAll().Count());
         }
 
         [TestMethod]
-        public void InMemoryRepository_Save_Returns_ListCount_Two_Greater_After_Saving_Two_Items()
+        public void InMemoryRepository_SaveOrUpdate_Returns_ListCount_Two_Greater_After_Saving_Two_Items()
         {
-            var expectedCount = _repository.List().Count + 2;
+            var expectedCount = _repository.GetAll().Count() + 2;
             AddItems(2);
 
-            Assert.AreEqual(expectedCount, _repository.List().Count);
+            Assert.AreEqual(expectedCount, _repository.GetAll().Count());
         }
 
         [TestMethod]
-        public void InMemoryRepository_GetGyId_Returns_Item_By_Id()
+        public void InMemoryRepository_GetById_Returns_Item_By_Id()
         {
             AddItems(2);
 
-            var expectedItem = _repository.GetGyId(2);
-            AssertResult(expectedItem, _repository.GetGyId(2));
+            var expectedItem = _repository.GetById(2);
+            AssertResult(expectedItem, _repository.GetById(2));
         }
 
         [TestMethod]
-        public void InMemoryRepository_GetGyId_Returns_New_Item_When_Not_Found()
+        public void InMemoryRepository_GetById_Returns_New_Item_When_Not_Found()
         {
             AddItems(2);
 
             var expectedItem = new Item();
-            var result = _repository.GetGyId(3);
+            var result = _repository.GetById(3);
             Assert.IsNotNull(result);
 
             Assert.AreEqual(expectedItem.Id, result.Id);
@@ -79,23 +79,23 @@ namespace DataRepositoryTests
         }
 
         [TestMethod]
-        public void InMemoryRepository_GetGyUid_Returns_Item_By_Uid()
+        public void InMemoryRepository_GetByUid_Returns_Item_By_Uid()
         {
             AddItems(2);
-            var expectedItem = _repository.GetGyId(2);
+            var expectedItem = _repository.GetById(2);
 
-            AssertResult(expectedItem, _repository.GetGyUid(expectedItem.Uid));
+            AssertResult(expectedItem, _repository.GetByUid(expectedItem.Uid));
         }
 
         [TestMethod]
         public void InMemoryRepository_Delete_Item_Deletes_Item()
         {
             var expectedItem = AddExpectedItem();
-            var result = _repository.List().FirstOrDefault(item => item == expectedItem);
+            var result = _repository.GetAll().FirstOrDefault(item => item == expectedItem);
             AssertResult(expectedItem, result);
 
-            _repository.Delete(expectedItem);
-            result = _repository.List().FirstOrDefault(item => item == expectedItem);
+            _repository.DeleteOnSubmit(expectedItem);
+            result = _repository.GetAll().FirstOrDefault(item => item == expectedItem);
 
             Assert.IsNull(result);
         }
@@ -104,11 +104,11 @@ namespace DataRepositoryTests
         public void InMemoryRepository_Delete_By_Id_Deletes_Item()
         {
             var expectedItem = AddExpectedItem();
-            var result = _repository.List().FirstOrDefault(item => item == expectedItem);
+            var result = _repository.GetAll().FirstOrDefault(item => item == expectedItem);
             AssertResult(expectedItem, result);
 
             _repository.Delete(result.Id);
-            result = _repository.List().FirstOrDefault(item => item == expectedItem);
+            result = _repository.GetAll().FirstOrDefault(item => item == expectedItem);
 
             Assert.IsNull(result);
         }
@@ -117,11 +117,11 @@ namespace DataRepositoryTests
         public void InMemoryRepository_Delete_By_Uid_Deletes_Item()
         {
             var expectedItem = AddExpectedItem();
-            var result = _repository.List().FirstOrDefault(item => item == expectedItem);
+            var result = _repository.GetAll().FirstOrDefault(item => item == expectedItem);
             AssertResult(expectedItem, result);
 
             _repository.Delete(result.Uid);
-            result = _repository.List().FirstOrDefault(item => item == expectedItem);
+            result = _repository.GetAll().FirstOrDefault(item => item == expectedItem);
 
             Assert.IsNull(result);
         }
@@ -135,7 +135,7 @@ namespace DataRepositoryTests
                                        UserName = string.Format("UserName_{0}", "Test")
                                    };
 
-            expectedItem = _repository.Save(expectedItem);
+            expectedItem = _repository.SaveOrUpdate(expectedItem);
             return expectedItem;
         }
         
@@ -150,11 +150,11 @@ namespace DataRepositoryTests
                                       UserName = string.Format("UserName_{0}", i)
                                   };
 
-                _repository.Save(product);
+                _repository.SaveOrUpdate(product);
 
                 //GenericFluentFactory<Item>
                 //    .Init(product, _repository)
-                //    .Save();
+                //    .SaveOrUpdate();
             }
         }
 
@@ -176,7 +176,7 @@ namespace DataRepositoryTests
             //    .AddPropertyValue(p => p.Name, productName)
             //    .AddPropertyValue(p => p.Description, productDescription)
             //    .AddPropertyValue(p => p.UserName, productUserName)
-            //    .Save();
+            //    .SaveOrUpdate();
 
             // ToDo: Mmmm, this breaks because of lack of type checking
             //GenericFluentFactory<Product>
@@ -185,7 +185,7 @@ namespace DataRepositoryTests
             //    .AddPropertyValue(p => p.Name, productName)
             //    .AddPropertyValue(p => p.Description, productDescription)
             //    .AddPropertyValue(p => p.UserName, productUserName)
-            //    .Save();
+            //    .SaveOrUpdate();
 
             // Better...
             //GenericFluentFactory<Item>
@@ -195,7 +195,7 @@ namespace DataRepositoryTests
             //                  Description = productDescription,
             //                  UserName = productUserName
             //              }, _repository)
-            //    .Save();
+            //    .SaveOrUpdate();
 
             // Best - Do not use stupid fluent factory...
         }

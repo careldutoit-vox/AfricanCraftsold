@@ -8,7 +8,8 @@ namespace DataRepository.Common
 {
     public interface IModificationHistory
     {
-        string EnityName { get; set; }
+        string EntityName { get; set; }
+        Guid Uid { get; set; }
         DateTime DateLastModified { get; set; }
         string ModifiedBy { get; set; }
     }

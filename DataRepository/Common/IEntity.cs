@@ -9,9 +9,9 @@ namespace DataRepository.Common
         Guid Uid { get; set; }
         DateTime DateCreated { get; set; }
         string CreatedBy { get; set; }
-        List<IModificationHistory> ModificationHistories { get; set; }
+        List<ModificationHistory> ModificationHistories { get; set; }
 
         bool IsNew();
-        void AddModificationHistory(IModificationHistory modificationHistory);
+        //void AddModificationHistory(ModificationHistory modificationHistory);
     }
 }

@@ -14,11 +14,14 @@ namespace DataRepository.Common
         public Guid Uid { get; set; }
         public DateTime DateCreated { get; set; }
         public string CreatedBy { get; set; }
-        public List<IModificationHistory> ModificationHistories { get; set; }
+        public virtual List<ModificationHistory> ModificationHistories { get; set; }
         
-        public void AddModificationHistory(IModificationHistory modificationHistory)
-        {
-            throw new NotImplementedException();
-        }
+        //public void AddModificationHistory(ModificationHistory modificationHistory)
+        //{
+        //    if (ModificationHistories == null)
+        //        ModificationHistories = new List<ModificationHistory>();
+
+        //    ModificationHistories.Add(modificationHistory);
+        //}
     }
 }
